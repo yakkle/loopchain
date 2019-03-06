@@ -10,9 +10,10 @@ requirements:
 install:
 	pip3 install git+https://github.com/icon-project/icon-service.git@master
 	pip3 install git+https://github.com/icon-project/icon-commons.git@master
-	pip3 install git+https://github.com/icon-project/icon-rpc-server.git@master
+	pip3 install git+https://github.com/icon-project/icon-rpc-server.git@1.1.3.4
 	pip3 install tbears
-	pip3 install -e .
+	pip3 install -r requirements.txt
+	#pip3 install -e .
 
 setup: generate-proto generate-key
 
@@ -41,9 +42,9 @@ clean: clean-mq clean-pyc
 
 clean-mq:
 	@echo "Cleaning up RabbitMQ..."
-	@rabbitmqctl stop_app
-	@rabbitmqctl reset
-	@rabbitmqctl start_app
+	@sudo rabbitmqctl stop_app
+	@sudo rabbitmqctl reset
+	@sudo rabbitmqctl start_app
 
 clean-pyc:
 	@echo "Clear __pycache__"

@@ -65,9 +65,10 @@ class ConsensusBase(metaclass=ABCMeta):
         block_version = self._blockchain.block_versioner.get_version(block_height)
         block_builder = BlockBuilder.new(block_version, self._blockchain.tx_versioner)
 
+        block_tx_size = 0
         tx_versioner = self._blockchain.tx_versioner
         while self._txQueue:
-            if block_builder.size() >= conf.MAX_TX_SIZE_IN_BLOCK:
+            if block_tx_size >= conf.MAX_TX_SIZE_IN_BLOCK:
                 logging.debug(f"consensus_base total size({block_builder.size()}) "
                               f"count({len(block_builder.transactions)}) "
                               f"_txQueue size ({len(self._txQueue)})")
@@ -91,5 +92,6 @@ class ConsensusBase(metaclass=ABCMeta):
                 traceback.print_exc()
             else:
                 block_builder.transactions[tx.hash] = tx
+                block_tx_size += tx.size(tx_versioner)
 
         return block_builder
