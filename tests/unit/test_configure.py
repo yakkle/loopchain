@@ -17,13 +17,11 @@
 """Test Configure class"""
 
 import logging
-import os
 import sys
-import unittest
 from pathlib import Path
 
-import loopchain.utils as util
-import testcase.unittest.test_util as test_util
+import unittest
+from ..unit import test_util
 
 sys.path.append('../')
 from loopchain import configure as conf
@@ -60,7 +58,7 @@ class TestConfigure(unittest.TestCase):
         test_configure_json_path = "configure_json_for_test.json"
         configure_json_file = Path(test_configure_json_path)
         if not configure_json_file.is_file():
-            test_configure_json_path = "testcase/unittest/configure_json_for_test.json"
+            test_configure_json_path = "tests/unit/configure_json_for_test.json"
 
         # WHEN
         conf.Configure().load_configure_json(test_configure_json_path)
